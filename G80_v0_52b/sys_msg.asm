@@ -72,6 +72,11 @@ HELP_MSG:
         IF (BASIC = 1)
         DB      TAB,"BASIC - TINY BASIC v2.5g",CR,LF
         ENDIF
+
+        IF (MS_BASIC = 1)
+        DB      TAB,"BASIC - MSBASIC v4.7b",CR,LF
+        ENDIF
+
         IF (CFORTH = 1)
         DB      TAB,"FORTH - CamelForth v1.2a",CR,LF,LF
         ENDIF

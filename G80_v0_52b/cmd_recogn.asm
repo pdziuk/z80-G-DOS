@@ -100,6 +100,12 @@ IN_CMD_GO:                      ;FIND MATCHING TOKEN AND GO  -  002E
         JP Z,START              ;START BASIC  (tiny basic)
         ENDIF
 
+        IF (MS_BASIC = 1)
+        LD C,TOK_BASIC          ;TEST FOR BASIC
+        CP C
+        JP Z, BASSETUP
+        ENDIF
+
         IF (CFORTH = 1)
         LD C,TOK_FORTH          ;TEST FOR FORTH
         CP C
@@ -181,6 +187,9 @@ TOK_SAVE        EQU     02FH
 TOK_LOAD        EQU     020H
 
         IF (BASIC = 1)
+TOK_BASIC       EQU     062H
+        ENDIF
+        IF (MS_BASIC = 1)
 TOK_BASIC       EQU     062H
         ENDIF
         IF (CFORTH = 1)

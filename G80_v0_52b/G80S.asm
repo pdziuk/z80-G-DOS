@@ -59,10 +59,13 @@ INCLUDE "equates.asm"         ;DEFINITIONS OF VALUES
 ;
 ;       0 = NOT INCLUDED
 ;       1 = INCLUDED
+;
+;       IF MS_BASIC is enabled, you cannot have BASIC or CFORTH Enabled
 ;-------------------------------------------------------------------------------
 
-BASIC           EQU     1
-CFORTH          EQU     1
+BASIC           EQU     0
+MS_BASIC        EQU     1               ; if enabled, cannot have BASIC and CFORTH = 1
+CFORTH          EQU     0
 
 ;-------------------------------------------------------------------------------
 ; BEGINNING OF CODE
@@ -78,43 +81,47 @@ BOOT:
 ;-------------------------------------------------------------------------------
 
 IF (BASIC = 1)
-INCLUDE "basic_pg0.asm"         ;ZERO PAGE FOR BASIC
+INCLUDE "basic_pg0.asm"         ;ZERO PAGE FOR TINY BASIC
+ENDIF
+
+IF (MS_BASIC = 1)
+INCLUDE "msbasic_pg0.asm"
 ENDIF
 
 ;-------------------------------------------------------------------------------
 ; DOS CALLS
 ;-------------------------------------------------------------------------------
                 ORG     00B6h        
-DCALL0:                         ;CALL 00B6h
-        JP RAM_CLR
-DCALL1:                         ;CALL 00B9h
-        JP DELAY
-DCALL2:                         ;CALL 00BCh
-        JP MILLI_DLY
-DCALL3:                         ;CALL 00BFh
-        JP BUF_CLR
-DCALL4:                         ;CALL 00C2h
-        JP BUF_WRITE
-DCALL5:                         ;CALL 00C5h
-        JP PRINT_CHAR
-DCALL6:                         ;CALL 00C8h
-        JP PRINT_HEX
-DCALL7:                         ;CALL 00CBh
-        JP PRINT_STRING
-DCALL8:                         ;CALL 00CEh
-        JP TXA_RDY
-DCALL9:                         ;CALL 00D1h
-        JP RXA_RDY
-DCALL10:                        ;CALL 00D4h
-        JP TXB_RDY
-DCALL11:                        ;CALL 00D7h
-        JP RXB_RDY
-DCALL12:                        ;CALL 00DAh
-        JP GET_KEY
-DCALL13:                        ;CALL 00DDh
-        JP ASCIIHEX_TO_BYTE
-DCALL14:                        ;CALL 00C0h
-        JP CONVERT_HEX_VAL
+;DCALL0:                         ;CALL 00B6h
+;        JP RAM_CLR
+;DCALL1:                         ;CALL 00B9h
+;        JP DELAY
+;DCALL2:                         ;CALL 00BCh
+;        JP MILLI_DLY
+;DCALL3:                         ;CALL 00BFh
+;        JP BUF_CLR
+;DCALL4:                         ;CALL 00C2h
+;        JP BUF_WRITE
+;DCALL5:                         ;CALL 00C5h
+;        JP PRINT_CHAR
+;DCALL6:                         ;CALL 00C8h
+;        JP PRINT_HEX
+;DCALL7:                         ;CALL 00CBh
+;        JP PRINT_STRING
+;DCALL8:                         ;CALL 00CEh
+;        JP TXA_RDY
+;DCALL9:                         ;CALL 00D1h
+;        JP RXA_RDY
+;DCALL10:                        ;CALL 00D4h
+;        JP TXB_RDY
+;DCALL11:                        ;CALL 00D7h
+;        JP RXB_RDY
+;DCALL12:                        ;CALL 00DAh
+;        JP GET_KEY
+;DCALL13:                        ;CALL 00DDh
+;        JP ASCIIHEX_TO_BYTE
+;DCALL14:                        ;CALL 00C0h
+;        JP CONVERT_HEX_VAL
 
 ;DCALL15 .. DCALL24
 
@@ -148,7 +155,7 @@ INIT:
 MAIN_LOOP:
         CALL GET_KEY                    ;IF SET, GET THE KEY.
         CALL BUF_WRITE                  ;WRITE TO BUFFER
-        LD C,LF                         ;CHECK IF LINE FEED
+        LD C,CR                         ;CHECK IF CARRAGE RETURN
         SUB C
         JR NZ,MAIN_LOOP                 ;IF NOT LINE FEED, RESTART LOOP
         CALL IN_CMD_CHK                 ;CHECK IF COMMAND
@@ -165,6 +172,10 @@ INCLUDE "memorystick_low_level.asm"
 
         IF (BASIC = 1)
 INCLUDE "basic.asm"
+        ENDIF
+
+        IF (MS_BASIC = 1)
+INCLUDE "bas32K.asm"
         ENDIF
 
         IF (CFORTH = 1)

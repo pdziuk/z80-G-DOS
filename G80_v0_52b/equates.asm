@@ -44,6 +44,8 @@ STACK           EQU     0FEFFH          ; Doug had as 0FBFF
 BUF_BOT         EQU     0FFDAH
 BUF_TOP         EQU     0FFFFH
 BUF_POINTER     EQU     0FFD9H
+IRQ_VECTOR      EQU     0FF00H
+INKEYVALUE      EQU     0FF1EH
 tb_dir_count    EQU     0FF1FH          ; 1 byte to store directory items found in dir command - this limits to 255 files for now...
 filename_buffer EQU     0FF20H          ; 16 byte buffer for the file name which is 8.3+null = 13 bytes max
 disk_buffer     EQU     0FF30H          ; 32 byte buffer for file - not sur eif I will use it in the memorystick_low_level commands
