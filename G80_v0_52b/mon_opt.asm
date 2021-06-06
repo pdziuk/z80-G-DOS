@@ -23,14 +23,79 @@ CALL_CMD:
         LD E,A
         CALL ASCIIHEX_TO_BYTE
         LD L,A                  ;PLACE LOWER BYTE IN L
-        LD DE,(CALL_CMD+30)           ;PAD THE SP FOR FUTURE PC.
-        PUSH DE                 ;PUSH ONTO THE STACK...
-        JP (HL)                 ;GO TO MEMORY ADDRESS TO EXECUTE
-        RET                     ;RETURN AFTER RETURN...BROKEN...
+        LD DE,RETLOC            ;SIMULATE A CALL FUNCTION BY GETTING RETURN ADDRESS
+        PUSH DE                 ;AND PUSHING ONTO THE STACK...
+CLOC:   JP (HL)                 ;GO TO MEMORY ADDRESS TO EXECUTE
+RETLOC  CALL BUF_CLR            ;RET IN THE CALLED CODE WILL COME BACK HERE
+        CALL PRINT_PROMPT       ;WHERE WE CLEAR BUFFER AND PRINT COMMAND PROMPT
+        RET                     ;RETURN TO MONITOR MAIN LOOP WITH CLEARED BUFFER AND PROMPT READY TO DO IT AGAIN
 
 CLS:
         LD HL,CS_MSG
         CALL PRINT_STRING
+        CALL PRINT_PROMPT
+        RET
+
+MON_DIR:
+        CALL directory          ;Directory
+        CALL BUF_CLR
+        CALL PRINT_PROMPT
+        RET
+
+MON_DEL:
+        LD DE,filename_buffer   ;Pointer to filename buffer
+        LD HL,BUF_BOT+4         ;Point to start of filename
+EFNAME: LD A,(HL)               ;GET THE CHAR FROM BUFFER
+        LD C,00H                ;CHECK IF END OF LINE
+        CP C
+        JR Z,DO_ERASE           ;IF END OF WORD TRY TO ERASE
+        LD (DE),A               ;STORE IN FILENAME BUFFER
+        INC DE
+        INC HL
+        JP EFNAME              ;GET NEXT CHARACTER
+DO_ERASE:
+        LD A,00H
+        LD (DE),A
+        CALL ERASE
+        CALL BUF_CLR
+        CALL PRINT_PROMPT
+        RET
+
+MON_LOAD:
+        LD DE,filename_buffer   ;Pointer to filename buffer
+        LD HL,BUF_BOT+5         ;Point to start of filename
+LFNAME: LD A,(HL)               ;GET THE CHAR FROM BUFFER
+        LD C,00H                ;CHECK IF END OF LINE
+        CP C
+        JR Z,DO_LOAD            ;IF END OF WORD TRY TO LOAD
+        LD (DE),A               ;STORE IN FILENAME BUFFER
+        INC DE
+        INC HL
+        JP LFNAME              ;GET NEXT CHARACTER
+DO_LOAD:
+        LD A,00H
+        LD (DE),A
+        CALL load
+        CALL BUF_CLR
+        CALL PRINT_PROMPT
+        RET
+
+MON_SAVE:
+        LD DE,filename_buffer   ;Pointer to filename buffer
+        LD HL,BUF_BOT+5         ;Point to start of filename
+SFNAME: LD A,(HL)               ;GET THE CHAR FROM BUFFER
+        LD C,00H                ;CHECK IF END OF LINE
+        CP C
+        JR Z,DO_SAVE            ;IF END OF WORD TRY TO SAVE
+        LD (DE),A               ;STORE IN FILENAME BUFFER
+        INC DE
+        INC HL
+        JP SFNAME              ;GET NEXT CHARACTER
+DO_SAVE:
+        LD A,00H
+        LD (DE),A
+        CALL save
+        CALL BUF_CLR
         CALL PRINT_PROMPT
         RET
 
@@ -282,3 +347,4 @@ HEXLOAD:
         CALL IH_LOAD
         CALL PRINT_PROMPT
         RET
+

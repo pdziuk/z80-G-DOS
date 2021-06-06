@@ -38,12 +38,15 @@ PIOCMD          EQU     83H    ;PIO CONTROL PORT
 ROM_TOP         EQU     07FFFH
 RAM_BOT         EQU     08000H
 RAM_TOP         EQU     0FFFFH
-USRSPC_TOP      EQU     0FAFFH
+USRSPC_TOP      EQU     0FDFFH          ; Doug had as 0FAFFH
 USRSPC_BOT      EQU     08000H
-STACK           EQU     0FBFFH
+STACK           EQU     0FEFFH          ; Doug had as 0FBFF
 BUF_BOT         EQU     0FFDAH
 BUF_TOP         EQU     0FFFFH
 BUF_POINTER     EQU     0FFD9H
+tb_dir_count    EQU     0FF1FH          ; 1 byte to store directory items found in dir command - this limits to 255 files for now...
+filename_buffer EQU     0FF20H          ; 16 byte buffer for the file name which is 8.3+null = 13 bytes max
+disk_buffer     EQU     0FF30H          ; 32 byte buffer for file - not sur eif I will use it in the memorystick_low_level commands
 
 SPACE           EQU     020H            ; Space
 TAB             EQU     09H             ; HORIZONTAL TAB

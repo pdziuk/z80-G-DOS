@@ -1,10 +1,10 @@
 [Project]
 Name=G80S.zdsp
-Path=C:\Users\Gamebox\Documents\z80 Assembly Routines\G80\G80_v0_52b\
+Path=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\
 ObjExt=.bin
 
 [File]
-Total=14
+Total=16
 0=G80S.asm
 1=Temp.asm
 2=sys_routines.asm
@@ -19,10 +19,12 @@ Total=14
 11=camel80h.asm
 12=basic_pg0.asm
 13=equates.asm
+14=memorystick_low_level.asm
+15=message.asm
 
 [Directory]
 Total=1
-0=C:\Users\Gamebox\Documents\z80 Assembly Routines\G80\G80_v0_52b\
+0=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\
 
 [Options]
 Total=10
@@ -41,10 +43,17 @@ Total=10
 Total=0
 
 [FileInUse]
-Total=6
-0=C:\Users\Gamebox\Documents\z80 Assembly Routines\G80\G80_v0_52b\sys_routines.asm
-1=C:\Users\Gamebox\Documents\z80 Assembly Routines\G80\G80_v0_52b\CHANGELOG.TXT
-2=C:\Users\Gamebox\Documents\z80 Assembly Routines\G80\G80_v0_52b\equates.asm
-3=C:\Users\Gamebox\Documents\z80 Assembly Routines\G80\G80_v0_52b\sys_msg.asm
-4=C:\Users\Gamebox\Documents\z80 Assembly Routines\G80\G80_v0_52b\G80S.asm
-5=C:\Users\Gamebox\Documents\z80 Assembly Routines\G80\G80_v0_52b\basic.asm
+Total=13
+0=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\sys_routines.asm
+1=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\CHANGELOG.TXT
+2=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\equates.asm
+3=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\G80S.asm
+4=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\basic.asm
+5=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\basic_pg0.asm
+6=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\message.asm
+7=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\memorystick_low_level.asm
+8=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\camel80.asm
+9=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\camel80h.asm
+10=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\cmd_recogn.asm
+11=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\mon_opt.asm
+12=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\sys_msg.asm

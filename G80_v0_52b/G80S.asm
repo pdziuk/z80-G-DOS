@@ -138,6 +138,10 @@ INIT:
         CALL PRINT_STRING
         LD HL,SIGNON_MSG
         CALL PRINT_STRING
+
+        CALL configure_memorystick
+        CALL get_module_version
+
         CALL PRINT_PROMPT
 
 ; SERMAIN_LOOP, THE MAIN LOOP FOR THE SERIAL MONITOR.
@@ -156,6 +160,8 @@ INCLUDE "mon_opt.asm"
 INCLUDE "sys_msg.asm"
 INCLUDE "cmd_recogn.asm"
 INCLUDE "hex_load.asm"
+INCLUDE "message.asm"
+INCLUDE "memorystick_low_level.asm"
 
         IF (BASIC = 1)
 INCLUDE "basic.asm"

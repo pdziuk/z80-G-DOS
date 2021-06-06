@@ -11,14 +11,16 @@ CS_MSG:
 SIGNON_MSG:
         DB      LF
         IF (BOARD = 0)
-        DB      "G80-S/USB Computer by Doug Gabbard - 2017",CR,LF,LF
+        DB      "G80-S/USB Computer - 2021",CR,LF,LF
         ENDIF
         IF (BOARD = 1)
-        DB      "G80-UVK Computer by Doug Gabbard - 2017",CR,LF,LF
+        DB      "G80-UVK Computer - 2021",CR,LF,LF
         ENDIF
 VERSION:
-        DB      "G-DOS Prototype v0.52b",CR,LF
-        DB      "Dev-Team: Doug Gabbard, Mike Veit, & Amardeep Chana",CR,LF,LF
+        DB      "G-DOS v1.0",CR,LF
+        DB      "Monitor, Tiny Basic and Forth adapted from Doug Gabbard's RetroDepot G80 work",CR,LF
+        DB      "CH376S USB interface adapted from John Squires work at http://8bitstack.co.uk",CR,LF
+        DB      "Modifications by Pat Dziuk",CR,LF,CR,LF
         DB      "Type 'HELP' for command list.",CR,LF,LF,00H
 
 MEMORY_CLR_MSG:
@@ -68,7 +70,7 @@ HELP_MSG:
         DB      CR,LF," G80 COMMANDS:",CR,LF,LF
         DB      " LANGUAGES:",CR,LF
         IF (BASIC = 1)
-        DB      TAB,"BASIC - TINY BASIC 2.5g",CR,LF
+        DB      TAB,"BASIC - Tiny Basic",CR,LF
         ENDIF
         IF (CFORTH = 1)
         DB      TAB,"FORTH - CamelForth v1.2a",CR,LF,LF
@@ -76,12 +78,16 @@ HELP_MSG:
         DB      " MONITOR:",CR,LF
         DB      TAB,"CALL XXXX - RUN CODE AT LOCATION XXXX",CR,LF
         DB      TAB,"CLS - CLEAR THE TERMINAL SCREEN",CR,LF
+        DB      TAB,"DEL - DELETE <FILENAME>",CR,LF
+        DB      TAB,"DIR - DIRECTORY OF USB MEMORY STICK",CR,LF
         DB      TAB,"DUMP XXXX - DUMP 256 BYTES OF MEMORY",CR,LF
         DB      TAB,"HELP - THIS SCREEN",CR,LF
         DB      TAB,"HEXLOAD - LOAD INTEL HEX FILES OVER SERIAL",CR,LF
         DB      TAB,"IN XX - READ INPUT FROM PORT XX",CR,LF
+        DB      TAB,"LOAD - LOAD <FILENAME> STARTING AT $8000",CR,LF
         DB      TAB,"MODMEM XXXX - MODIFY MEMORY STARTING AT XXXX",CR,LF
         DB      TAB,"OUT XX HH - WRITE HH TO PORT XX",CR,LF
+        DB      TAB,"SAVE - SAVE <FILENAME> SAVES FROM $8000-$FDFF",CR,LF
         DB      TAB,"RAMCLR - CLEAR USER AREA OF MEMORY",CR,LF
         DB      TAB,"RESTART - SOFT RESTART",CR,LF,LF
 HELP_PORTS_MSG:
@@ -93,3 +99,4 @@ HELP_PORTS_MSG:
         DB      00H
 
 ;-------------------------------------------------------------------------------
+

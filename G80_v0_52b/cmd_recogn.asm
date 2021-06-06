@@ -20,7 +20,7 @@ IN_CMD_CHKL:
 
         SUB B
         JR Z,IN_CMD_CHKL        ;IF MATCH, GET NEXT CHAR
-        JR IN_CMD_NEXT_WORD     ;IF NOT, TRY NEXT WORD
+        JP IN_CMD_NEXT_WORD     ;IF NOT, TRY NEXT WORD
 
 
 
@@ -81,11 +81,23 @@ IN_CMD_GO:                      ;FIND MATCHING TOKEN AND GO  -  002E
         LD C,TOK_RESTART
         CP C
         JP Z,RESTART            ;RESTART MONITOR
+        LD C,TOK_DIR
+        CP C
+        JP Z,MON_DIR            ;DISK DIRECTORY
+        LD C,TOK_DEL
+        CP C
+        JP Z,MON_DEL            ;DISK DELETE FILE
+        LD C,TOK_LOAD
+        CP C
+        JP Z,MON_LOAD           ;DISK LOAD FILE STARTING AT 8000
+        LD C,TOK_SAVE
+        CP C
+        JP Z,MON_SAVE           ;DISK SAVE FROM 8000 TO FDFF
 
         IF (BASIC = 1)
         LD C,TOK_BASIC          ;TEST FOR BASIC
         CP C
-        JP Z,START              ;START TINY BASIC
+        JP Z,START              ;START BASIC  (tiny basic)
         ENDIF
 
         IF (CFORTH = 1)
@@ -122,14 +134,18 @@ IN_CMD_NEXT_WORD:               ;GRAB NEXT WORD
 CMD_TABLE:                      ;COMMAND WORD LIST
         DB      "CALL",00H
         DB      "CLS",00H
+        DB      "DEL",00H
+        DB      "DIR",00H
         DB      "DUMP",00H
         DB      "IN",00H
         DB      "HELP",00H
         DB      "HEXLOAD",00H
+        DB      "LOAD",00H
         DB      "MODMEM",00H
         DB      "OUT",00H
         DB      "RAMCLR",00H
         DB      "RESTART",00H
+        DB      "SAVE",00H
         DB      "TEST",00H
 
         IF (BASIC = 1)
@@ -146,7 +162,7 @@ CMD_ERROR:
         CALL PRINT_PROMPT
         RET
 
-;COMMAND TOKEN VALUES
+;COMMAND TOKEN VALUES IS A SUM OF THE CHARACTER ASCII CODES FOR ALL CHARACTERS
 
 TOK_CALL        EQU     01CH
 TOK_CLS         EQU     0E2H
@@ -159,14 +175,16 @@ TOK_OUT         EQU     0F8H
 TOK_RAMCLR      EQU     0C1H
 TOK_RESTART     EQU     025H
 TOK_TEST        EQU     040H
+TOK_DIR         EQU     0DFH
+TOK_DEL         EQU     0D5H
+TOK_SAVE        EQU     02FH
+TOK_LOAD        EQU     020H
 
-IF (BASIC = 1)
+        IF (BASIC = 1)
 TOK_BASIC       EQU     062H
-ENDIF
-IF (CFORTH = 1)
+        ENDIF
+        IF (CFORTH = 1)
 TOK_FORTH       EQU     083H
-ENDIF
+        ENDIF
 ;-------------------------------------------------------------------------------
-
-
 
