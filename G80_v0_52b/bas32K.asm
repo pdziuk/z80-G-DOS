@@ -17,6 +17,7 @@
 ; Modified by Pat Dziuk to sit along side Doug Gabbard's G80 Monitor - specifically moved start address to $200
 
 ; NASCOM ROM BASIC Ver 4.7, (C) 1978 Microsoft
+; Scanned from source published in 80-BUS NEWS from Vol 2, Issue 3
 ; (May-June 1983) to Vol 3, Issue 3 (May-June 1984)
 ; Adapted for the freeware Zilog Macro Assembler 2.10 to produce
 ; the original ROM code (checksum A934H). PA
