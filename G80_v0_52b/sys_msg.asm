@@ -11,10 +11,10 @@ CS_MSG:
 SIGNON_MSG:
         DB      LF
         IF (BOARD = 0)
-        DB      "G80-S/USB Computer - 2021",CR,LF,LF
+        DB      "G80-S/USB Computer by Doug Gabbard - 2021",CR,LF,LF
         ENDIF
         IF (BOARD = 1)
-        DB      "G80-UVK Computer - 2021",CR,LF,LF
+        DB      "GG80-UVK Computer by Doug Gabbard - 2017",CR,LF,LF
         ENDIF
 VERSION:
         DB      "G-DOS v1.0",CR,LF
@@ -70,7 +70,7 @@ HELP_MSG:
         DB      CR,LF," G80 COMMANDS:",CR,LF,LF
         DB      " LANGUAGES:",CR,LF
         IF (BASIC = 1)
-        DB      TAB,"BASIC - Tiny Basic",CR,LF
+        DB      TAB,"BASIC - TINY BASIC v2.5g",CR,LF
         ENDIF
         IF (CFORTH = 1)
         DB      TAB,"FORTH - CamelForth v1.2a",CR,LF,LF
