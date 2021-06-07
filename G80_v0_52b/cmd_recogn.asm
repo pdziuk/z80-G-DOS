@@ -100,7 +100,7 @@ IN_CMD_GO:                      ;FIND MATCHING TOKEN AND GO  -  002E
         JP Z,START              ;START BASIC  (tiny basic)
         ENDIF
 
-        IF (MS_BASIC = 1)
+        IF (MS_BASIC= 1)
         LD C,TOK_BASIC          ;TEST FOR BASIC
         CP C
         JP Z, BASSETUP
@@ -155,6 +155,9 @@ CMD_TABLE:                      ;COMMAND WORD LIST
         DB      "TEST",00H
 
         IF (BASIC = 1)
+        DB      "BASIC",00H
+        ENDIF
+        IF (MS_BASIC = 1)
         DB      "BASIC",00H
         ENDIF
         IF (CFORTH = 1)

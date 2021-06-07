@@ -43,7 +43,6 @@ serBufUsed      EQU     serRdPtr+2
 basicStarted    EQU     serBufUsed+1
 TEMPSTACK       EQU     80EDH   ;Top of BASIC line input buffer
                                  ;so is "free ram" when BASIC resets
-BASIC_START     EQU     0200H   ;BEGINNING OF BASIC
 
 ;CR              EQU     0DH
 ;LF              EQU     0AH
@@ -125,7 +124,7 @@ COLD_OR_WARM:
 COLDSTART:
         LD A,'Y'                ;SET BASIC STARTED FLAG
         LD (basicStarted),A
-        JP BASIC_START          ;START BASIC COLD
+        JP COLD          ;START BASIC COLD
 CHECKWARM:
         CP 'W'
         JR NZ,COLD_OR_WARM
@@ -134,7 +133,7 @@ CHECKWARM:
         RST 08H
         LD A,LF
         RST 08H
-        JP BASIC_START+3        ;START BASIC WARM
+        JP COLD+3        ;START BASIC WARM
 
 SIGNONBAS1:
         DB      CS

@@ -3116,7 +3116,7 @@ BNRMLP: LD      B,A             ; Save bit count
         LD      L,A             ; VLSB= 0
         LD      A,B             ; Get exponent
         SUB     8               ; Count 8 bits
-        CP      -24-8           ; Was number zero?
+        CP      $E0           ; Was number zero?  CP -24-8 gives wrong F0 should be E0
         JP      NZ,BNRMLP       ; No - Keep normalising
 RESZER: XOR     A               ; Result is zero
 SAVEXP: LD      (FPEXP),A       ; Save result as zero

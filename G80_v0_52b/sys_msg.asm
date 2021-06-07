@@ -19,8 +19,10 @@ SIGNON_MSG:
 VERSION:
         DB      "G-DOS v1.0",CR,LF
         DB      "Monitor, Tiny Basic and Forth adapted from Doug Gabbard's RetroDepot G80 work",CR,LF
+        DB      "MSBASIC v4.7 adpated from Grant Searle's work at http://searle.x10hosts.com",CR,LF
         DB      "CH376S USB interface adapted from John Squires work at http://8bitstack.co.uk",CR,LF
-        DB      "Modifications by Pat Dziuk",CR,LF,CR,LF
+        DB      "DOS DIR, SAVE, LOAD, DEL, and",CR,LF
+        DB      "MSBASIC COLOR, SCREEN, INVERSE, NORMAL, FLASH commands by Pat Dziuk",CR,LF,CR,LF
         DB      "Type 'HELP' for command list.",CR,LF,LF,00H
 
 MEMORY_CLR_MSG:

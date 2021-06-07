@@ -64,7 +64,7 @@ INCLUDE "equates.asm"         ;DEFINITIONS OF VALUES
 ;-------------------------------------------------------------------------------
 
 BASIC           EQU     0
-MS_BASIC        EQU     1               ; if enabled, cannot have BASIC and CFORTH = 1
+MS_BASIC        EQU     1             ; if enabled, cannot have BASIC and CFORTH = 1
 CFORTH          EQU     0
 
 ;-------------------------------------------------------------------------------
@@ -80,55 +80,55 @@ BOOT:
 ; ZERO PAGE FOR BASIC IF INCLUDED
 ;-------------------------------------------------------------------------------
 
-IF (BASIC = 1)
+        IF (BASIC = 1)
 INCLUDE "basic_pg0.asm"         ;ZERO PAGE FOR TINY BASIC
-ENDIF
+        ENDIF
 
-IF (MS_BASIC = 1)
+        IF (MS_BASIC = 1)
 INCLUDE "msbasic_pg0.asm"
-ENDIF
+        ENDIF
 
 ;-------------------------------------------------------------------------------
 ; DOS CALLS
 ;-------------------------------------------------------------------------------
-                ORG     00B6h        
-;DCALL0:                         ;CALL 00B6h
-;        JP RAM_CLR
-;DCALL1:                         ;CALL 00B9h
-;        JP DELAY
-;DCALL2:                         ;CALL 00BCh
-;        JP MILLI_DLY
-;DCALL3:                         ;CALL 00BFh
-;        JP BUF_CLR
-;DCALL4:                         ;CALL 00C2h
-;        JP BUF_WRITE
-;DCALL5:                         ;CALL 00C5h
-;        JP PRINT_CHAR
-;DCALL6:                         ;CALL 00C8h
-;        JP PRINT_HEX
-;DCALL7:                         ;CALL 00CBh
-;        JP PRINT_STRING
-;DCALL8:                         ;CALL 00CEh
-;        JP TXA_RDY
-;DCALL9:                         ;CALL 00D1h
-;        JP RXA_RDY
-;DCALL10:                        ;CALL 00D4h
-;        JP TXB_RDY
-;DCALL11:                        ;CALL 00D7h
-;        JP RXB_RDY
-;DCALL12:                        ;CALL 00DAh
-;        JP GET_KEY
-;DCALL13:                        ;CALL 00DDh
-;        JP ASCIIHEX_TO_BYTE
-;DCALL14:                        ;CALL 00C0h
-;        JP CONVERT_HEX_VAL
+                ORG     0100h
+DCALL0:                         ;CALL 00100h
+        JP RAM_CLR
+DCALL1:                         ;CALL 0103h
+        JP DELAY
+DCALL2:                         ;CALL 0106h
+        JP MILLI_DLY
+DCALL3:                         ;CALL 0109h
+        JP BUF_CLR
+DCALL4:                         ;CALL 010Ch
+        JP BUF_WRITE
+DCALL5:                         ;CALL 010Fh
+        JP PRINT_CHAR
+DCALL6:                         ;CALL 0112h
+        JP PRINT_HEX
+DCALL7:                         ;CALL 0115h
+        JP PRINT_STRING
+DCALL8:                         ;CALL 0118h
+        JP TXA_RDY
+DCALL9:                         ;CALL 011Bh
+        JP RXA_RDY
+DCALL10:                        ;CALL 011Eh
+        JP TXB_RDY
+DCALL11:                        ;CALL 0121h
+        JP RXB_RDY
+DCALL12:                        ;CALL 0124h
+        JP GET_KEY
+DCALL13:                        ;CALL 0127h
+        JP ASCIIHEX_TO_BYTE
+DCALL14:                        ;CALL 012Ah
+        JP CONVERT_HEX_VAL
 
 ;DCALL15 .. DCALL24
 
 ;-------------------------------------------------------------------------------
 ; MONITOR/OS
 ;-------------------------------------------------------------------------------
-                ORG     0100H
+                ORG     0200H
 ; INIT IS THE ROUTINE THAT SETS UP, OR INITIALIZES, THE PERIPHERALS.
 INIT:
         CALL SERIAL_INIT
