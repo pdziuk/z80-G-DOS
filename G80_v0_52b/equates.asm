@@ -7,24 +7,24 @@ SIOA_D          EQU     00H    ;SIO CHANNEL A DATA REGISTER
 SIOA_C          EQU     02H    ;SIO CHANNEL A CONTROL REGISTER
 SIOB_D          EQU     01H    ;SIO CHANNEL B DATA REGISTER
 SIOB_C          EQU     03H    ;SIO CHANNEL B CONTROL REGISTER
-IF (SIOA_BAUD = 0)
+        IF (SIOA_BAUD = 0)
 SIOA_CLK        EQU     4CH     ;SIO 1/16 CLOCK
-ENDIF
-IF (SIOA_BAUD = 1)
+        ENDIF
+        IF (SIOA_BAUD = 1)
 SIOA_CLK        EQU     8CH     ;SIO 1/32 CLOCK
-ENDIF
-IF (SIOA_BAUD = 2)
+        ENDIF
+        IF (SIOA_BAUD = 2)
 SIOA_CLK        EQU     0CCH    ;SIO 1/64 CLOCK
-ENDIF
-IF (SIOB_BAUD = 0)
+        ENDIF
+        IF (SIOB_BAUD = 0)
 SIOB_CLK        EQU     4CH     ;SIO 1/16 CLOCK
-ENDIF
-IF (SIOB_BAUD = 1)
+        ENDIF
+        IF (SIOB_BAUD = 1)
 SIOB_CLK        EQU     8CH     ;SIO 1/32 CLOCK
-ENDIF
-IF (SIOB_BAUD = 2)
+        ENDIF
+        IF (SIOB_BAUD = 2)
 SIOB_CLK        EQU     0CCH    ;SIO 1/64 CLOCK
-ENDIF
+        ENDIF
 ;-------------------------------------------------------------------------------
 ; PIO LABELS
 ;-------------------------------------------------------------------------------

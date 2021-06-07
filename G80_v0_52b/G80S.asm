@@ -52,7 +52,7 @@ SERIAL          EQU     0
 SIOA_BAUD       EQU     1
 SIOB_BAUD       EQU     1
 
-INCLUDE "equates.asm"         ;DEFINITIONS OF VALUES
+        INCLUDE "equates.asm"         ;DEFINITIONS OF VALUES
 
 ;-------------------------------------------------------------------------------
 ; PICK YOUR PROGRAMMING LANGUAGES
@@ -81,11 +81,11 @@ BOOT:
 ;-------------------------------------------------------------------------------
 
         IF (BASIC = 1)
-INCLUDE "basic_pg0.asm"         ;ZERO PAGE FOR TINY BASIC
+        INCLUDE "basic_pg0.asm"         ;ZERO PAGE FOR TINY BASIC
         ENDIF
 
         IF (MS_BASIC = 1)
-INCLUDE "msbasic_pg0.asm"
+        INCLUDE "msbasic_pg0.asm"
         ENDIF
 
 ;-------------------------------------------------------------------------------
@@ -162,24 +162,24 @@ MAIN_LOOP:
         JR MAIN_LOOP
 
 
-INCLUDE "sys_routines.asm"
-INCLUDE "mon_opt.asm"
-INCLUDE "sys_msg.asm"
-INCLUDE "cmd_recogn.asm"
-INCLUDE "hex_load.asm"
-INCLUDE "message.asm"
-INCLUDE "memorystick_low_level.asm"
+        INCLUDE "sys_routines.asm"
+        INCLUDE "mon_opt.asm"
+        INCLUDE "sys_msg.asm"
+        INCLUDE "cmd_recogn.asm"
+        INCLUDE "hex_load.asm"
+        INCLUDE "message.asm"
+        INCLUDE "memorystick_low_level.asm"
 
         IF (BASIC = 1)
-INCLUDE "basic.asm"
+        INCLUDE "basic.asm"
         ENDIF
 
         IF (MS_BASIC = 1)
-INCLUDE "bas32K.asm"
+        INCLUDE "bas32K.asm"
         ENDIF
 
         IF (CFORTH = 1)
-INCLUDE "camel80.asm"
+        INCLUDE "camel80.asm"
         ENDIF
 
 
