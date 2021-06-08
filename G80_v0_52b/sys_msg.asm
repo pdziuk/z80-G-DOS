@@ -17,7 +17,7 @@ SIGNON_MSG:
         DB      "GG80-UVK Computer by Doug Gabbard - 2017",CR,LF,LF
         ENDIF
 VERSION:
-        DB      "G-DOS v1.0",CR,LF
+        DB      "G-DOS v1.1",CR,LF
         DB      "Monitor, Tiny Basic and Forth adapted from Doug Gabbard's RetroDepot G80 work",CR,LF
         DB      "MSBASIC v4.7 adpated from Grant Searle's work at http://searle.x10hosts.com",CR,LF
         DB      "CH376S USB interface adapted from John Squires work at http://8bitstack.co.uk",CR,LF

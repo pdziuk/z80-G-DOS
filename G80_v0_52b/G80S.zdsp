@@ -4,7 +4,7 @@ Path=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\
 ObjExt=.bin
 
 [File]
-Total=18
+Total=17
 0=G80S.asm
 1=Temp.asm
 2=sys_routines.asm
@@ -20,9 +20,8 @@ Total=18
 12=basic_pg0.asm
 13=equates.asm
 14=memorystick_low_level.asm
-15=message.asm
-16=msbasic_pg0.asm
-17=bas32K.asm
+15=msbasic_pg0.asm
+16=bas32K.asm
 
 [Directory]
 Total=1
@@ -45,19 +44,18 @@ Total=10
 Total=0
 
 [FileInUse]
-Total=15
+Total=14
 0=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\sys_routines.asm
 1=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\CHANGELOG.TXT
 2=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\equates.asm
-3=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\sys_msg.asm
-4=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\basic.asm
-5=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\basic_pg0.asm
-6=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\message.asm
-7=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\memorystick_low_level.asm
-8=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\camel80.asm
-9=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\camel80h.asm
-10=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\cmd_recogn.asm
-11=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\mon_opt.asm
-12=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\msbasic_pg0.asm
-13=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\G80S.asm
-14=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\bas32K.asm
+3=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\basic.asm
+4=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\basic_pg0.asm
+5=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\memorystick_low_level.asm
+6=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\camel80.asm
+7=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\camel80h.asm
+8=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\cmd_recogn.asm
+9=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\mon_opt.asm
+10=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\msbasic_pg0.asm
+11=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\bas32K.asm
+12=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\G80S.asm
+13=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\sys_msg.asm
