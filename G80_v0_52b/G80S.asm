@@ -167,7 +167,6 @@ MAIN_LOOP:
         INCLUDE "sys_msg.asm"
         INCLUDE "cmd_recogn.asm"
         INCLUDE "hex_load.asm"
-        INCLUDE "message.asm"
         INCLUDE "memorystick_low_level.asm"
 
         IF (BASIC = 1)

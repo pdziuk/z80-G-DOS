@@ -4322,12 +4322,16 @@ MSBASIC_SAVE:                    ; This Saves the current program to USB Drive w
         or l
         cp 0
         jr nz, msbasic_save_continue1
-        call message
-        db 'No program yet to save!',13,10,0
+        LD      HL,doserrmsg1   ; Print error
+        CALL    PRS             ; Output string
         pop af
         pop hl
         pop de
         ret
+        
+doserrmsg1:
+        db 'No program yet to save!',13,10,0
+        
 msbasic_save_continue1:
         pop af
         pop hl
@@ -4350,19 +4354,19 @@ DOS_SAVE:
         
         call close_file
         
-        call message
-        db 'Creating file...',13,10,0
-        
         ld hl, SLASHSTR
         call open_file
         ld de, filename_buffer
         call create_file
         jr z, msbasic_save_continue
-        call message
-        db 'Could not create file.',13,10,0
+        LD      HL,doserrmsg2   ; Print error
+        CALL    PRS             ; Output string
         pop hl
         pop de
         ret
+        
+doserrmsg2:
+        db 'Could not create file.',13,10,0
         
 msbasic_get_program_size:
         ; Gets the total size of the program, in bytes, into hl
@@ -4375,8 +4379,6 @@ msbasic_get_program_size:
         ret
         
 msbasic_erase_file:
-        call message
-        db 'Erasing file...',13,10,0
         ld a, SET_FILE_NAME
         call send_command_byte
         ld hl, filename_buffer
@@ -4436,11 +4438,14 @@ DOS_LOAD:
         call msbasic_does_file_exist
         jr z, msbasic_load_can_do
 mbasic_file_not_found
-        call message
-        db 'File not found.',13,10,0
+        LD      HL,doserrmsg3   ; Print error
+        CALL    PRS             ; Output string
         pop hl
         pop de
         ret
+
+doserrmsg3:
+        db 'File not found.',13,10,0
         
 msbasic_load_can_do:
         ld hl, SLASHSTR

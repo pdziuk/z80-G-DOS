@@ -23,9 +23,12 @@ failed_to_setup:
     call DELAY
     pop bc
     djnz configure_memorystick1
-    call message
-    db 'CH376S error.',13,10,0
+    LD HL,dosmsg1
+    CALL PRINT_STRING
     ret
+
+dosmsg1:
+    db 'CH376S error.',13,10,0    
 
 ;----------------------------------------------------------------
 ; Call this once at startup
@@ -50,14 +53,17 @@ check_module_exists:
 
     cp 255-123      ; The result is 255 minus what we sent in
     ret z
-    call message
-    db 'ERROR: CH376S module not found.',13,10,0
+    LD HL,dosmsg2
+    CALL PRINT_STRING
     ret
 
+dosmsg2:
+    db 'ERROR: CH376S module not found.',13,10,0
+    
 ;-----------------------------------------------------------------
 get_module_version:
-    call message
-    db 'Found CH376S v',0 ; Mine is v3!!!
+    LD HL,dosmsg3
+    CALL PRINT_STRING
     
     ld a, GET_IC_VER
     call send_command_byte
@@ -69,6 +75,9 @@ get_module_version:
     call newline
     ret
 
+dosmsg3:
+    db 'Found CH376S v',0
+    
 ;-----------------------------------------------------------------
 set_usb_host_mode:
     ld a, SET_USB_MODE
@@ -78,10 +87,13 @@ set_usb_host_mode:
     call read_status_byte
     cp USB_INT_CONNECT
     ret z
-    call message
-    db 'ERROR: No USB Disk?',13,10,0
+    LD HL,dosmsg4
+    CALL PRINT_STRING
     ret
 
+dosmsg4:
+    db 'ERROR: No USB Disk?',13,10,0
+    
 ;-----------------------------------------------------------------
 connect_to_disk:
     ld a, DISK_CONNECT
@@ -89,10 +101,13 @@ connect_to_disk:
     ld a, GET_STATUS
     call read_status_byte
     ret z
-    call message
-    db 'ERROR connecting to USB Disk.',13,10,0
+    LD HL,dosmsg5
+    CALL PRINT_STRING
     ret
 
+dosmsg5:
+    db 'ERROR connecting to USB Disk.',13,10,0
+    
 ;-----------------------------------------------------------------
 mount_disk:
     ld a, DISK_MOUNT
@@ -100,9 +115,12 @@ mount_disk:
     ld a, GET_STATUS
     call read_status_byte
     ret z
-    call message
-    db 'ERROR mounting USB Disk.',13,10,0
+    LD HL,dosmsg6
+    CALL PRINT_STRING
     ret
+
+dosmsg6:
+    db 'ERROR mounting USB Disk.',13,10,0
 
 ;-----------------------------------------------------------------
 read_disk_signature:
@@ -154,9 +172,12 @@ read_disk_signature4:
     ret
 
 could_not_read_disk_sig:
-    call message
-    db 'ERROR reading disk sig.',13,10,0
+    LD HL,dosmsg7
+    CALL PRINT_STRING
     ret
+
+dosmsg7:
+    db 'ERROR reading disk sig.',13,10,0
 
 connect_to_usb_drive:
     ; Connects us up to the USB Drive.
@@ -322,7 +343,7 @@ read_command_byte:
 read_data_byte:
     in a, (mem_stick_data_port)
     ret
-    
+
 read_data_byte_silent:
     in a, (mem_stick_data_port)
     ret
@@ -359,9 +380,12 @@ wait_til_not_busy2:
     ld a, b
     or c
     jr nz, wait_til_not_busy1
-    call message
-    db '[USB TIMEOUT]', 13, 10, 0
+    LD HL,dosmsg8
+    CALL PRINT_STRING
     ret
+
+dosmsg8:
+    db '[USB TIMEOUT]', 13, 10, 0
 
 read_status_byte:
     ld a, GET_STATUS
@@ -391,11 +415,13 @@ tb_dir_loop:
     cp 0
     jp nz, dir_end
     
-    call message
-    db 'No files found.',13,10,0
-
+    LD HL,dosmsg9
+    CALL PRINT_STRING
 dir_end:
     ret
+    
+dosmsg9:
+    db 'No files found.',13,10,0
     
 tbasic_dir_loop_good:
     ld a, RD_USB_DATA0
@@ -449,9 +475,13 @@ save:                    ; This Saves the current program to USB Drive with the 
     or l
     cp 0
     jr nz, save_continue
-    call message
-    db 'No program yet to save!',13,10,0
+    LD HL,dosmsg10
+    CALL PRINT_STRING
     ret
+    
+dosmsg10:
+    db 'No program yet to save!',13,10,0
+    
 save_continue:
     ;call READ_QUOTED_FILENAME
     call does_file_exist
@@ -459,17 +489,22 @@ save_continue:
     
     call close_file
     
-    call message
-    db 'Creating file...',13,10,0
+    LD HL,dosmsg11
+    CALL PRINT_STRING
     
     ld hl, SLASHSTR
     call open_file
     ld de, filename_buffer
     call create_file
     jr z, tb_save_continue
-    call message
-    db 'Could not create file.',13,10,0
+    LD HL,dosmsg12
+    CALL PRINT_STRING
     ret
+    
+dosmsg11:
+    db 'Creating file...',13,10,0
+dosmsg12:
+    db 'Could not create file.',13,10,0
     
 get_program_size:
     ; Gets the total size of the program, in bytes, into hl
@@ -503,9 +538,12 @@ load:                                   ; *** LOAD "filename" ***
     call does_file_exist
     jr z, load_can_do
 tb_file_not_found
-    call message
-    db 'File not found.',13,10,0
+    LD HL,dosmsg13
+    CALL PRINT_STRING
     ret
+    
+dosmsg13:
+    db 'File not found.',13,10,0
     
 load_can_do:
     ld hl, SLASHSTR
@@ -560,8 +598,8 @@ ERASE:              ; *** ERASE "filename" ***
     ret
     
 tb_erase_file:
-    call message
-    db 'Erasing file...',13,10,0
+    LD HL,dosmsg14
+    CALL PRINT_STRING
     ld a, SET_FILE_NAME
     call send_command_byte
     ld hl, filename_buffer
@@ -570,6 +608,9 @@ tb_erase_file:
     call send_command_byte
     call read_status_byte
     ret
+    
+dosmsg14:
+    db 'Erasing file...',13,10,0
     
 does_file_exist:
     ; Looks on disk for a file. Returns Z if file exists.
@@ -613,6 +654,42 @@ block_loop:
 write_finished:
     ret
 
+show_hl_as_hex:
+    ld a, h
+    call show_a_as_hex
+    ld a, l
+    call show_a_as_hex
+    ret
+    
+show_a_as_hex:
+    push af
+    srl a
+    srl a
+    srl a
+    srl a
+    add a,'0'
+    cp ':'
+    jr c, show_a_as_hex1
+    add a, 7
+show_a_as_hex1:
+    call PRINT_CHAR
+    pop af
+    and %00001111
+    add a,'0'
+    cp ':'
+    jr c, show_a_as_hex2
+    add a, 7
+show_a_as_hex2:
+    call PRINT_CHAR
+    ret
+
+newline:
+    ld a,13
+    call PRINT_CHAR
+    ld a,10
+    call PRINT_CHAR
+    ret
+    
 mem_stick_data_port equ 04
 mem_stick_command_port equ 05
 
@@ -674,4 +751,5 @@ SLASHSTR:
     
 STAR_DOT_STAR:
     db '*.*',0
+    
     
