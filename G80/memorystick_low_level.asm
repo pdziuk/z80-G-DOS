@@ -5,8 +5,15 @@
 ;--------------------;
 ; LOW LEVEL ROUTINES ;
 ;--------------------;
-    
+
 configure_memorystick:
+    ld a, 5CH
+    ld hl, cur_dir
+    ld (hl),a
+    ld a, 00H
+    inc hl
+    ld (hl),a
+
     ld b, 5                                 ; Have 5 attempts at configuring the module before giving up
 configure_memorystick1:
     push bc
@@ -394,13 +401,14 @@ read_status_byte:
     ret
 
 directory:                                    ; This does a directory listing.
+    call newline
     ; Clear files counter
     ld a, 0
     ld (tb_dir_count), a
+    ld (dir_line_files),a
     
-    ; Open ROOT folder
-    ld hl, SLASHSTR
-    call open_file
+    ; Open current directory
+    call open_cur_dir
     
     ; Then open *
     ld hl, STAR_DOT_STAR
@@ -418,6 +426,7 @@ tb_dir_loop:
     LD HL,dosmsg9
     CALL PRINT_STRING
 dir_end:
+    call newline
     ret
     
 dosmsg9:
@@ -439,7 +448,7 @@ tb_dir_next:
     
 tb_dir_good_length:
     ld a, (disk_buffer+11)
-    and $16                             ; Check for hidden or system files, or directories
+    and $06                             ; Check for hidden or system files
     jp nz, tb_dir_next                  ; and skip accordingly.
     
 tb_it_is_not_system:
@@ -455,6 +464,10 @@ tb_dir_show_name_loop:
     inc hl
     djnz tb_dir_show_name_loop
     
+    ld a, (disk_buffer+11)
+    and $10                             ; Check for directory
+    jp nz, tb_dir_directory
+    
     ld a, '.'
     call PRINT_CHAR
     
@@ -464,7 +477,57 @@ tb_dir_show_extension_loop:
     call PRINT_CHAR
     inc hl
     djnz tb_dir_show_extension_loop
+    
+    ld a, (dir_line_files)        ; load a with current files output on the current line
+    inc a                         ; increment current files output on the current line
+    ld (dir_line_files),a         ; store current files output on the current line
+    
+    cp $5                         ; see if current is equal to 5
+    jp z,dirnewline               ; if line has 5 files on it, output a newline
+    
+    ld a, $20           ; output a " | " between columns
+    call PRINT_CHAR
+    ld a, $20
+    call PRINT_CHAR
+    ld a, $7c
+    call PRINT_CHAR
+    ld a, $20
+    call PRINT_CHAR
+    
+    jp tb_dir_next
+    
+dirnewline:             ; output a line feed and reset current files output on line to 0
+    ld a, $0
+    ld (dir_line_files),a
     call newline
+    jp tb_dir_next
+    
+tb_dir_directory:
+    ld a, $3c
+    call PRINT_CHAR
+    ld a, $44
+    call PRINT_CHAR
+    ld a, $49
+    call PRINT_CHAR
+    ld a, $52
+    call PRINT_CHAR
+    ld a, $3e
+    call PRINT_CHAR
+    
+    ld a, (dir_line_files)        ; load a with current files output on the current line
+    inc a                         ; increment current files output on the current line
+    ld (dir_line_files),a         ; store current files output on the current line
+    
+    cp $5                         ; see if current is equal to 5
+    jp z,dirnewline               ; if line has 5 files on it, output a newline
+    
+    ld a, $20           ; output a " | " between columns
+    call PRINT_CHAR
+    ld a, $7c
+    call PRINT_CHAR
+    ld a, $20
+    call PRINT_CHAR
+    
     jp tb_dir_next
 
 save:                    ; This Saves the current program to USB Drive with the given name.
@@ -492,8 +555,12 @@ save_continue:
     LD HL,dosmsg11
     CALL PRINT_STRING
     
-    ld hl, SLASHSTR
-    call open_file
+    ;ld hl, SLASHSTR
+    ;call open_file
+    
+    ; Open current directory
+    call open_cur_dir
+    
     ld de, filename_buffer
     call create_file
     jr z, tb_save_continue
@@ -508,12 +575,17 @@ dosmsg12:
     
 get_program_size:
     ; Gets the total size of the program, in bytes, into hl
-    ld hl, 7DFFH
+    ;ld hl, 7DFFH
+    ld hl,5000H
     ret
     
 tb_save_continue:
-    call close_file
-    ld hl, SLASHSTR
+    ;call close_file
+    ;ld hl, SLASHSTR
+    
+    ; Open current directory
+    call open_cur_dir
+    
     call open_file
     ld hl, filename_buffer
     call open_file
@@ -546,8 +618,12 @@ dosmsg13:
     db 'File not found.',13,10,0
     
 load_can_do:
-    ld hl, SLASHSTR
-    call open_file
+    ;ld hl, SLASHSTR
+    ;call open_file
+    
+    ; Open current directory
+    call open_cur_dir
+    
     ld hl, filename_buffer
     call open_file
     
@@ -614,8 +690,12 @@ dosmsg14:
     
 does_file_exist:
     ; Looks on disk for a file. Returns Z if file exists.
-    ld hl, SLASHSTR
-    call open_file
+    ;ld hl, SLASHSTR
+    ;call open_file
+    
+    ; Open current directory
+    call open_cur_dir
+    
     ld hl, filename_buffer
     jp open_file
     
@@ -654,6 +734,71 @@ block_loop:
 write_finished:
     ret
 
+dos_cd:                 ; set the current directory assumes you will start with "\" and hl points to the directory
+    LD DE,cur_dir       ;Pointer to current directory buffer
+CD_NAME: 
+    LD A,(HL)           ;GET THE CHAR FROM BUFFER
+    LD C,00H            ;CHECK IF END OF LINE
+    CP C
+    JR Z,DO_CD          ;IF END OF WORD TRY TO ERASE
+    LD (DE),A           ;STORE IN CURRENT DIRECTORY BUFFER
+    INC DE
+    INC HL
+    JP CD_NAME           ;GET NEXT CHARACTER
+DO_CD:
+    LD A,00H
+    LD (DE),A
+    RET
+    
+open_cur_dir:
+    ld hl, cur_dir
+    ld de, dir_name
+    
+    ld a,(hl)           ; get first "\"
+    ld (de),a
+    inc hl
+    inc de
+
+open_cur_dir1:
+    ld a,(hl)
+    
+    ld c, 00h           ; check for null termination if so do a open file and return
+    cp c
+    jp z, open_dir_end
+    
+    ld c, 5CH           ; check for a "\" if so do an open file and go get next subdirectory
+    cp c 
+    jp  z, open_dir
+    
+    ld (de),a
+    inc hl
+    inc de
+    jp open_cur_dir1
+    
+open_dir:
+    ld a, 00h
+    ld (de),a
+    push hl
+    push de
+    ld hl, dir_name
+    call open_file
+    pop de
+    pop hl
+    ld de, dir_name
+    inc hl              ; skip over "\"
+    jp open_cur_dir1
+    
+open_dir_end
+    ld a, 00h
+    ld (de),a
+    push hl
+    push de
+    ld hl, dir_name
+    call open_file
+    pop de
+    pop hl
+    ret
+    
 show_hl_as_hex:
     ld a, h
     call show_a_as_hex
@@ -751,5 +896,6 @@ SLASHSTR:
     
 STAR_DOT_STAR:
     db '*.*',0
+    
     
     

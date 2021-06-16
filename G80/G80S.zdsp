@@ -1,6 +1,6 @@
 [Project]
 Name=G80S.zdsp
-Path=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\
+Path=C:\Source\z80-G-DOS\z80-G-DOS\G80\
 ObjExt=.bin
 
 [File]
@@ -25,7 +25,7 @@ Total=17
 
 [Directory]
 Total=1
-0=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\
+0=C:\Source\z80-G-DOS\z80-G-DOS\G80\
 
 [Options]
 Total=10
@@ -33,7 +33,7 @@ Total=10
 1=COMMONSEG:0
 2=AUTOLOCAL:0
 3=BRACKET:0
-4=DEBUG1:0
+4=DEBUG1:1
 5=DEBUG2:0
 6=CASEINS:0
 7=PUBSYMBOLS:0
@@ -45,17 +45,17 @@ Total=0
 
 [FileInUse]
 Total=14
-0=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\sys_routines.asm
-1=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\CHANGELOG.TXT
-2=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\equates.asm
-3=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\sys_msg.asm
-4=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\basic.asm
-5=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\basic_pg0.asm
-6=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\memorystick_low_level.asm
-7=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\camel80.asm
-8=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\camel80h.asm
-9=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\cmd_recogn.asm
-10=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\mon_opt.asm
-11=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\msbasic_pg0.asm
-12=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\bas32K.asm
-13=C:\Source\z80-G-DOS\z80-G-DOS\G80_v0_52b\G80S.asm
+0=C:\Source\z80-G-DOS\z80-G-DOS\G80\sys_routines.asm
+1=C:\Source\z80-G-DOS\z80-G-DOS\G80\CHANGELOG.TXT
+2=C:\Source\z80-G-DOS\z80-G-DOS\G80\equates.asm
+3=C:\Source\z80-G-DOS\z80-G-DOS\G80\sys_msg.asm
+4=C:\Source\z80-G-DOS\z80-G-DOS\G80\basic.asm
+5=C:\Source\z80-G-DOS\z80-G-DOS\G80\basic_pg0.asm
+6=C:\Source\z80-G-DOS\z80-G-DOS\G80\memorystick_low_level.asm
+7=C:\Source\z80-G-DOS\z80-G-DOS\G80\camel80.asm
+8=C:\Source\z80-G-DOS\z80-G-DOS\G80\camel80h.asm
+9=C:\Source\z80-G-DOS\z80-G-DOS\G80\cmd_recogn.asm
+10=C:\Source\z80-G-DOS\z80-G-DOS\G80\mon_opt.asm
+11=C:\Source\z80-G-DOS\z80-G-DOS\G80\msbasic_pg0.asm
+12=C:\Source\z80-G-DOS\z80-G-DOS\G80\bas32K.asm
+13=C:\Source\z80-G-DOS\z80-G-DOS\G80\G80S.asm

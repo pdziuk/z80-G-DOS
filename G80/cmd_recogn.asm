@@ -93,6 +93,9 @@ IN_CMD_GO:                      ;FIND MATCHING TOKEN AND GO  -  002E
         LD C,TOK_SAVE
         CP C
         JP Z,MON_SAVE           ;DISK SAVE FROM 8000 TO FDFF
+        LD C,TOK_CD
+        CP C
+        JP Z,MON_CD             ; DISK CHANGE DIRECTORY
 
         IF (BASIC = 1)
         LD C,TOK_BASIC          ;TEST FOR BASIC
@@ -139,6 +142,7 @@ IN_CMD_NEXT_WORD:               ;GRAB NEXT WORD
 
 CMD_TABLE:                      ;COMMAND WORD LIST
         DB      "CALL",00H
+        DB      "CD",00H
         DB      "CLS",00H
         DB      "DEL",00H
         DB      "DIR",00H
@@ -188,6 +192,7 @@ TOK_DIR         EQU     0DFH
 TOK_DEL         EQU     0D5H
 TOK_SAVE        EQU     02FH
 TOK_LOAD        EQU     020H
+TOK_CD          EQU     087H
 
         IF (BASIC = 1)
 TOK_BASIC       EQU     062H

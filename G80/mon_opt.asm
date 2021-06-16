@@ -99,6 +99,13 @@ DO_SAVE:
         CALL PRINT_PROMPT
         RET
 
+MON_CD:
+        LD HL, BUF_BOT+3
+        CALL dos_cd
+        CALL BUF_CLR
+        CALL PRINT_PROMPT
+        RET
+
 ;DUMP COMMAND
 ;-------------------------
 DUMP:
